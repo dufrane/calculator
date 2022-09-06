@@ -20,30 +20,43 @@ struct CalculatorLogic {
     mutating func calculate(symbol: String) -> Double? {
         
         if let n = number {
-            if symbol == "+/-" {
+            switch symbol {
+            case "+/-" :
                 return n * -1
-            } else if symbol == "AC" {
+            case "AC" :
                 return 0
-            } else if symbol ==  "%" {
+            case "%" :
                 return n * 0.01
-            } else if symbol == "=" {
-                performTwoNumCalculation(n2: n)
-            } else {
+            case "=" :
+                return performTwoNumCalculation(n2: n)
+            default:
                 intermediateCalculation = (n1: n, calcMethod: symbol)
             }
         }
         return nil
     }
     
-    private func performTwoNumCalculation(n2: Double) -> Double {
-        if let n1 = intermediateCalculation?.n1, let operation =  intermediateCalculation?.calcMethod {
-            if operation == "+" {
+    private func performTwoNumCalculation(n2: Double) -> Double? {
+        if let n1 = intermediateCalculation?.n1,
+            let operation =  intermediateCalculation?.calcMethod {
+            
+            switch operation{
+            case "+" :
                 return n1 + n2
+            case "-" :
+                return n1 - n2
+            case "×":
+                return n1 * n2
+            case "÷":
+                return n1 / n2
+            default:
+                fatalError("The operation passed in dose not match any of the cases")
             }
         }
+        return nil
     }
     
-        
     
-  
+    
+    
 }
